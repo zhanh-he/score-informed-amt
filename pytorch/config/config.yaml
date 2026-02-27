@@ -1,0 +1,109 @@
+wandb:
+  project: "202602_smc"
+  name: ""
+  comment: "mel229"
+
+
+exp:
+  # workspace: "./workspaces" #kaya
+  workspace: "/media/datadisk/home/22828187/zhanh/202510_hpt_data/workspaces" #uwa
+  # workspace: "/Users/hanyu/Documents/ipynb/202510_hpt_data/workspaces" #mac
+  # workspace: "/media/mengh/SharedData/zhanh/202510_hpt_data/workspaces" #mengh
+  total_iteration: 120_000  # 200_000 # 300_000 # 360_000
+  save_iteration: 10_000    # 6_000 # 6_000
+  eval_iteration: 10_000    # 6_000 # 6_000
+
+  optim: "adam"             # "adam" | "adamw" | "ranger"
+  learnrate: 1e-4           # 3e-4 # 1e-4
+  weight_decay: 0.0
+  decay: True # False
+  reduce_iteration: 10_000 # 6_000
+  random_seed: 86
+
+  mini_data: False # True when developing model
+  cuda: True
+  num_workers: 12 # 6 for Score Calculating
+  batch_size: 12
+
+  # Infer and Eval
+  run_infer: 'single' # 'multi'
+
+optim:
+  name: "adam"          # "adam" | "adamw"
+  lr: ${exp.learnrate}
+  weight_decay: 0.0
+
+
+feature:
+  audio_feature: "logmel"
+  classes_num: 88
+  # ---------------------------
+  # dataloader.py params
+  segment_seconds: 10.
+  hop_seconds: 1.
+  # ---------------------------
+  # feature_extractor.py params
+  # mel_bins: 229 # 去feature extractor里面手动定义吧
+  sample_rate: 22050
+  fft_size: 2048
+  frames_per_second: 100
+  augmentor: null
+  # ---------------------------
+  begin_note: 21
+  velocity_scale: 128
+  max_note_shift: 0
+
+
+dataset:
+  # Fix "maestro" for (train valid), select "smd|maestro|map" for (test)
+  train_set: "maestro"
+  test_set: "smd"
+
+  # Use the same workspace root as features.py packs to
+  train_h5: "${exp.workspace}/hdf5s/${dataset.train_set}"
+  test_h5: "${exp.workspace}/hdf5s/${dataset.test_set}"
+
+  # Provide dataset dir to process the features.py
+  smd_dir: "../Dataset/SMD"
+  maestro_dir: "../Dataset/maestro-v3.0.0"
+  maps_dir: "../Dataset/MAPS"
+
+
+# ---------------------------
+# AMT modules (base model + adapter + conditioning)
+# ---------------------------
+model:
+  type: "hpt"  # hpt | hppnet | dynest
+  params: {}
+  # score-inf condition selector:
+  # direct: ignore input2/input3.
+  # bilstm/scrr/dual_gated: cond = selected non-null inputs from input2/input3.
+  # note_editor: input2 must be onset; input3 is null/frame/exframe.
+  input2: null # onset | frame | exframe | null
+  input3: null # onset | frame | exframe | null
+  kim_condition: "frame" # for FiLMUNetPretrained only: frame | none
+  pretrained_checkpoint: "" # explicit ckpt path for eval/infer (all model types)
+  hppnet_model_size: 128
+
+
+score_informed:
+  method: "direct"     # direct | scrr | dual_gated | note_editor | bilstm
+  params: {}
+  train_mode: "joint"         # joint | adapter_then_score | adapter_then_joint
+  switch_iteration: 100_000    # phase switch point for staged modes
+
+
+post:
+  post_processor_type: 'regression' # 'onsets_frames'
+  # regression (0.1, 0.3, 0.3), onsets_frames (0.5, 0.1, 0.3)
+  frame_threshold: 0.3 # 0.1 in RegressionPostProcessor, 0.3 in score_calculator
+  onset_threshold: 0.3
+  offset_threshold: 0.3
+  pedal_offset_threshold: 0.2
+
+# ---------------------------
+# Loss configuration
+# ---------------------------
+loss:
+  loss_type: "kim_bce_l1" # "velocity_bce" | "velocity_mse" | "kim_bce_l1"
+  kim_loss_alpha: 0.5  # Weight of BCE term in Kim et al. 2024 BCE+L1 loss

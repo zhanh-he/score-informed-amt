@@ -1,0 +1,13 @@
+file name           :double_unet-bce_l1-True-28-3-162811
+dev_env             :local
+condition_check     :True
+condition_net       :DynamicFCInitFirst
+loss_type           :bce_l1
+condition_type      :frame
+batch_size          :30
+hop_seconds         :1
+segment_seconds     :2.0
+frames_per_second   :100
+feature type        :mel
+
+This file is a place holder, the real pre-trained checkpoint should be requested from Dr. Hyon Kim (UPF, Spain).
