@@ -9,13 +9,14 @@ It supports:
 - AMT's velocity estimation branch: `hpt`, `hppnet`, `dynest`
 - Reproduce AMT's performance with `direct` mode OR apply score-informed module `note_editor` (a lightweight Transformer encoder)
 - Evaluation our methods with MAESTRO v3 / SMD / MAPS datasets.
-- **Practical application: use the above on your own data (xxx.mid + xxx.wav, see [Sec 6 Inference](#6-inference)).**
+- **Practical application:** we provide a pretrained Score-HPT (`note_editor`, `input2=onset`, `input3=frame`) [[HERE]](./workspaces/checkpoints/hpt+onset+frame+score_note_editor/100000_iterations.pth) for procecssing your own data (xxx.mid + xxx.wav), see [Sec 6 Inference](#6-inference). 
+
 
 You can find our paper results on our jupyter notebook:
 - [`Train.ipynb`](./Train.ipynb): Figure 2 is extracted from our [open-available wandb records](https://wandb.ai/zhanh-uwa/202602_smc?nw=nwuserzhanh).
-- [`Test.ipynb`](./Test.ipynb): Tables 1 and 2 
+- [`Test.ipynb`](./Test.ipynb): Tables 1 and 2.
 
-The training takes 8~16 GiB GPU memory, inference takes less than 1 GiB.
+The training takes 8~16 GiB GPU memory, inference takes less than 1 GiB. We only provided one pretrained checkpoint in this repo to keep space. For other settings/checkpoints, please train from scratch or try contacting us: zhanh.he.uwa@gmail.com.
 ## 1. Dataset Preparation
 Download datasets:
 - MAESTRO v3.0.0: https://magenta.tensorflow.org/datasets/maestro
@@ -98,6 +99,7 @@ python pytorch/inference.py \
 
 ## Contact and Acknowledgment
 Due to the large size of pretrained model, you can contact us via email to obtain these ckpt files. Contact: zhanh.he.uwa@gmail.com
+Note: large benchmark checkpoints were removed from this repo to save GitHub space; see [`benchmarks/README.md`](./benchmarks/README.md) for removed paths and re-download instructions.
 
 Acknowledgment: 
 - We thank Hyon Kim et al. (ISMIR 2024, FiLM-UNet) for sharing their code and pretrained checkpoints!
