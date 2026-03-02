@@ -1,5 +1,5 @@
 # Score-Informed AMT Velocity Estimation
-This repo is the code of paper submitted to SMC2026, "Score-Informed Transformer for Refining MIDI Velocity in Automatic Music Transcription", a PyTorch implementation which use the MIDI score to estimate the MIDI velocity from MIDI score + audio.
+This repo is the code of paper submitted to SMC2026, "Score-Informed Transformer for Refining MIDI Velocity in Automatic Music Transcription" [PDF](https://arxiv.org/abs/2508.07757), a PyTorch implementation which use the MIDI score to estimate the MIDI velocity from MIDI score + audio.
 
 <p align="center">
   <img src="./benchmarks/p2.jpg" alt="Model overview" width="540">
