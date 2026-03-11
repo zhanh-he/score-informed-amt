@@ -1,6 +1,7 @@
 import argparse
 import csv
 import os
+import sys
 import time
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
@@ -10,6 +11,9 @@ import numpy as np
 import torch
 from hydra import compose, initialize
 from tqdm import tqdm
+
+# Ensure project root (contains `benchmarks/`) is importable when running `python pytorch/*.py`.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pytorch_utils import forward, forward_velo, move_data_to_device
 from model import build_adapter
