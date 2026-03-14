@@ -15,8 +15,9 @@ It supports:
 You can find our paper results on our jupyter notebook:
 - [`Train.ipynb`](./Train.ipynb): Figure 2 is extracted from our [open-available wandb records](https://wandb.ai/zhanh-uwa/202602_smc?nw=nwuserzhanh).
 - [`Test.ipynb`](./Test.ipynb): Tables 1 and 2.
+- [`Test_unaligned.ipynb`](./Test_unaligned.ipynb): Figure 6 Robustness Test.
 
-The training takes 8~16 GiB GPU memory, inference takes less than 1 GiB. We only provided one pretrained checkpoint in this repo to keep space. For other settings/checkpoints, please train from scratch or try contacting us: zhanh.he.uwa@gmail.com.
+The training takes 8~16 GiB GPU memory, inference takes less than 1 GiB. We only provided one pretrained checkpoint in this repo to keep space. For other settings/checkpoints, please train from scratch or try contacting me: zhanh.he.uwa@gmail.com.
 ## 1. Dataset Preparation
 Download datasets:
 - MAESTRO v3.0.0: https://magenta.tensorflow.org/datasets/maestro
@@ -84,7 +85,7 @@ Method/input compatibility:
 - `bilstm`, `dual_gated`, `scrr`: legacy options, not used in our SMC paper.
 
 ## 5. Evaluation (Paper Tables 1&2)
-Notebook path [`Test.ipynb`](./Test.ipynb). This files has recorded all results in our Paper.
+All results of our paper has been recorded in [`Test.ipynb`](./Test.ipynb) and [`Test_unaligned.ipynb`](./Test_unaligned.ipynb).
 
 ## 6. Inference
 Script entry: `pytorch/inference.py`. Use this file to do inference on your own data, which expects paired audio+midi files with the same basename (e.g., `xxx.wav` + `xxx.mid`).
